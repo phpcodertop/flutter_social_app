@@ -12,113 +12,129 @@ class PostsCarousel extends StatelessWidget {
 
   _buildPost(BuildContext context, int index) {
     Post post = posts[index];
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 6.0,
-                offset: Offset(0, 2),
-              )
-            ],
+    return AnimatedBuilder(
+      animation: pageController,
+      builder: (BuildContext context, widget) {
+        double value = 1;
+        if(pageController.position.haveDimensions) {
+          value = pageController.page! - index;
+          value = (1- (value.abs() * 0.24)).clamp(0.0, 1.0);
+        }
+        return Center(
+          child: SizedBox(
+            height: Curves.easeInOut.transform(value)  * 400.0,
+            child: widget,
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
-            child: Image(
-              image: AssetImage(
-                post.imageUrl,
-              ),
-              height: 400.0,
-              width: 300.0,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 10.0,
-          left: 10.0,
-          right: 10.0,
-          child: Container(
-            padding: const EdgeInsets.all(12.0),
-            height: 110.0,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(15.0),
-                bottomRight: Radius.circular(15.0),
-              ),
-              color: Colors.white54,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  post.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Text(
-                  post.location,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                const SizedBox(
-                  height: 6.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        ),
-                        const SizedBox(
-                          width: 6.0,
-                        ),
-                        Text(
-                          post.likes.toString(),
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.comment,
-                          color: Colors.blue,
-                        ),
-                        const SizedBox(
-                          width: 6.0,
-                        ),
-                        Text(
-                          post.comments.toString(),
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+        );
+      },
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6.0,
+                  offset: Offset(0, 2),
+                )
               ],
             ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: Image(
+                image: AssetImage(
+                  post.imageUrl,
+                ),
+                height: 400.0,
+                width: 300.0,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-      ],
+          Positioned(
+            bottom: 10.0,
+            left: 10.0,
+            right: 10.0,
+            child: Container(
+              padding: const EdgeInsets.all(12.0),
+              height: 110.0,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15.0),
+                  bottomRight: Radius.circular(15.0),
+                ),
+                color: Colors.white54,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    post.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24.0,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(
+                    post.location,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                          const SizedBox(
+                            width: 6.0,
+                          ),
+                          Text(
+                            post.likes.toString(),
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.comment,
+                            color: Colors.blue,
+                          ),
+                          const SizedBox(
+                            width: 6.0,
+                          ),
+                          Text(
+                            post.comments.toString(),
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
