@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_social_app/widgets/user_following.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -50,6 +51,11 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
             Tab(text: 'Latest'),
           ],
         ),
+      ),
+      body: ListView(
+        children: [
+          UserFollowing(),
+        ],
       ),
     );
   }
