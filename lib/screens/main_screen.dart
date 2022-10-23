@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_social_app/data/data.dart';
+import 'package:flutter_social_app/widgets/customDrawer.dart';
 import 'package:flutter_social_app/widgets/user_following.dart';
 
 import '../widgets/posts_carousel.dart';
@@ -67,6 +68,7 @@ class _MainScreenState extends State<MainScreen> with SingleTickerProviderStateM
           ),
         ],
       ),
+      drawer: CustomDrawer(),
     );
   }
 }
